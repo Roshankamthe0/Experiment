@@ -153,10 +153,12 @@ const question = document.getElementById("question");
 const moveLimit = 1000;
 let moveCount = 0;
 
-// Move No button when mouse comes near
+// Move No button when mouse comes near or on touch (for mobile)
 noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("touchstart", moveButton);
 
-function moveButton() {
+function moveButton(event) {
+    event.preventDefault(); // Prevent default touch behavior like scrolling
     if (moveCount >= moveLimit) {
         noBtn.disabled = true; // Disable the button so it can't be clicked
         return;
