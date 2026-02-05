@@ -61,6 +61,11 @@ button:hover {
     transform: scale(1.1);
 }
 
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
 #yes {
     background: #ff4d6d;
     color: white;
@@ -99,23 +104,10 @@ button:hover {
 
 /* Image styling */
 .valentine-image {
-    width: 100px;
-    height: auto;
-    margin-bottom: 20px;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
-  .valentine-image {
-    font-size: 50px; 
+    font-size: 50px;   /* size of hearts */
     margin-bottom: 10px;
     text-align: center;
     width: 100%;
-}
 }
 
 </style>
@@ -125,6 +117,7 @@ button:hover {
 
 <div class="container">
    <div class="valentine-image">💖❤️</div>
+
     <h2 id="question">Amit Will you be my Valentine? 💖❤️</h2>
 
     <div class="buttons">
@@ -156,10 +149,20 @@ const yesBtn = document.getElementById("yes");
 const result = document.getElementById("result");
 const question = document.getElementById("question");
 
+// Set move limit to 1000 for both mobile and desktop
+const moveLimit = 1000;
+let moveCount = 0;
+
 // Move No button when mouse comes near
 noBtn.addEventListener("mouseover", moveButton);
 
 function moveButton() {
+    if (moveCount >= moveLimit) {
+        noBtn.disabled = true; // Disable the button so it can't be clicked
+        return;
+    }
+    moveCount++;
+
     const container = document.querySelector(".container");
 
     const maxX = container.clientWidth - noBtn.clientWidth;
